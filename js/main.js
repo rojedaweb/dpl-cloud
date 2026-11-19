@@ -148,7 +148,7 @@ document.querySelectorAll('.filtbtn').forEach(function(btn) {
     });
 });
 
-// Category section cards â†’ scroll + filter
+// Las tarjetas de categorías desplazan la página y aplican el filtro
 document.querySelectorAll('.catcard').forEach(function(card) {
     card.addEventListener('click', function() {
         var f = this.getAttribute('data-filter');
@@ -186,8 +186,8 @@ function openMenuPop(card) {
     var full = Math.round(rating),
         empty = 5 - full;
     document.getElementById('mpStars').innerHTML =
-        '<i class="fas fa-star"></i>'.repeat(full) + 'â˜†'.repeat(empty) +
-        ' <span style="color:#bbb;font-size:.78rem;">' + rating + ' (' + reviews + ' reviews)</span>';
+        '<i class="fas fa-star"></i>'.repeat(full) + '☆'.repeat(empty) +
+        ' <span style="color:#bbb;font-size:.78rem;">' + rating + ' (' + reviews + ' reseñas)</span>';
 
     document.getElementById('mpDesc').textContent = desc;
 
@@ -195,9 +195,9 @@ function openMenuPop(card) {
         price + (old ? '<small style="color:#ccc;text-decoration:line-through;margin-left:8px;font-size:1rem;">' + old + '</small>' : '');
 
     document.getElementById('mpMeta').innerHTML =
-        '<div class="mpm"><div class="mpmv">' + cal + ' kcal</div><div class="mpml">Calories</div></div>' +
-        '<div class="mpm"><div class="mpmv">' + time + ' min</div><div class="mpml">Prep Time</div></div>' +
-        '<div class="mpm"><div class="mpmv">' + rating + '/5</div><div class="mpml">Rating</div></div>';
+        '<div class="mpm"><div class="mpmv">' + cal + ' kcal</div><div class="mpml">Calorías</div></div>' +
+        '<div class="mpm"><div class="mpmv">' + time + ' min</div><div class="mpml">Preparación</div></div>' +
+        '<div class="mpm"><div class="mpmv">' + rating + '/5</div><div class="mpml">Valoración</div></div>';
 
     document.getElementById('mpTags').innerHTML =
         tags.split(',').filter(Boolean).map(function(t) {
@@ -206,7 +206,7 @@ function openMenuPop(card) {
 
     mpQty = 1;
     document.getElementById('mpQnum').textContent = 1;
-    document.getElementById('mpAddCart').innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+    document.getElementById('mpAddCart').innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir al pedido';
     document.getElementById('mpAddCart').style.background = '';
 
     menuPop.classList.add('open');
@@ -260,14 +260,17 @@ document.getElementById('mpMinus').addEventListener('click', function() {
 
 // Add to cart button
 document.getElementById('mpAddCart').addEventListener('click', function() {
-    var cnt = parseInt(document.getElementById('cartCount').textContent) + mpQty;
-    document.getElementById('cartCount').textContent = cnt;
-    this.innerHTML = '<i class="fas fa-check"></i> Added to Cart!';
+    var cartCount = document.getElementById('cartCount');
+    if (cartCount) {
+        var cnt = parseInt(cartCount.textContent) + mpQty;
+        cartCount.textContent = cnt;
+    }
+    this.innerHTML = '<i class="fas fa-check"></i> ¡Añadido al pedido!';
     this.style.background = 'linear-gradient(135deg,var(--green),#1a4a35)';
     var self = this;
     setTimeout(function() {
         closeMenuPop();
-        self.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+        self.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir al pedido';
         self.style.background = '';
     }, 1000);
 });
@@ -275,10 +278,10 @@ document.getElementById('mpAddCart').addEventListener('click', function() {
 
 document.getElementById('resBtn').addEventListener('click', function() {
     var btn = this;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reservando...';
     btn.disabled = true;
     setTimeout(function() {
-        btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirm Reservation';
+        btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirmar reserva';
         btn.disabled = false;
         var ok = document.getElementById('resOk');
         ok.style.display = 'block';
@@ -292,10 +295,10 @@ document.getElementById('resBtn').addEventListener('click', function() {
 
 document.getElementById('ctcBtn').addEventListener('click', function() {
     var btn = this;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
     btn.disabled = true;
     setTimeout(function() {
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
         btn.disabled = false;
         var ok = document.getElementById('ctcOk');
         ok.style.display = 'block';
@@ -406,17 +409,17 @@ setInterval(function() {
     document.getElementById('cdS').textContent = String(cS).padStart(2, '0');
 }, 1000);
 
-/* â”€â”€ NEWSLETTER â”€â”€ */
+/* NEWSLETTER */
 document.getElementById('nlBtn').addEventListener('click', function() {
     var email = document.getElementById('nlEmail').value;
     if (email && email.includes('@')) {
         var btn = this;
-        btn.textContent = 'âœ“ Subscribed!';
+        btn.textContent = '✓ ¡Suscrito!';
         btn.style.background = '#4ade80';
         btn.style.color = '#222';
         document.getElementById('nlEmail').value = '';
         setTimeout(function() {
-            btn.textContent = 'Subscribe';
+            btn.textContent = 'Suscribirme';
             btn.style.background = '';
             btn.style.color = '';
         }, 3000);
